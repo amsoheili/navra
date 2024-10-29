@@ -24,6 +24,8 @@
 import { ref } from 'vue';
 import UiInput from '@/components/UiInput.vue';
 import UiButton from '@/components/UiButton.vue';
+import { useRouter } from 'vue-router';
+import { noticeService } from '@/reactives/notice.reactive';
 
 const isRegister = ref(false);
 const user = ref('');
@@ -39,17 +41,18 @@ const validity = ref({
   email: true,
   password: true,
 });
-
+const router = useRouter();
 
 function confirm(){
 
   updateErrorMessages();
 
   if(!isFormValid()){
-    console.log('not valid')
     return;
   }
 
+  noticeService.pushNotification('fsd','asdfa','error');
+  // router.push({name: 'articles'});
 }
 
 function isFormValid() {
