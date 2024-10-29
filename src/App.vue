@@ -7,6 +7,13 @@
 </script>
 
 <style>
+:root {
+  --silver: #eceeef;
+  --warm-grey: #707070;
+  --charcoal-grey: #373a3c;
+  --water-blue: #1c7cd5;
+  --white: #fff;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -22,11 +29,13 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: HelveticaNeue,serif;
 }
 
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  border: none;
 }
 </style>
