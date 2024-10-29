@@ -2,7 +2,7 @@
   <div class="ui-input" :class="{ hasError: props.hasError }">
     <div class="label">{{label}}</div>
     <div class="input">
-      <input v-model="value" @change="$emit('changeValue', $event.target.value)">
+      <input :type="type" v-model="value" @change="$emit('changeValue', $event.target.value)">
     </div>
     <div class="messages">{{errorMessage}}</div>
   </div>
@@ -12,7 +12,7 @@
 
 import { ref } from 'vue';
 
-const props = defineProps(['label','hasError', 'errorMessage']);
+const props = defineProps(['label','hasError', 'errorMessage', 'type']);
 
 const value = ref('');
 
