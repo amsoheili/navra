@@ -48,11 +48,11 @@ function confirm(){
   updateErrorMessages();
 
   if(!isFormValid()){
+    noticeService.pushNotification('Login Failed!', 'User name and/or Password is invalid', 'error');
     return;
   }
 
-  noticeService.pushNotification('fsd','asdfa','error');
-  // router.push({name: 'articles'});
+  router.push({name: 'articles'});
 }
 
 function isFormValid() {
