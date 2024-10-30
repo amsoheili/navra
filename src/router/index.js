@@ -5,6 +5,10 @@ import SingleArticle from '@/pages/single-article/SingleArticle.vue';
 
 const routes = [
   {
+    path: '/',
+    redirect: '/enter',
+  },
+  {
     path: '/articles',
     name: 'articles',
     component: Articles
