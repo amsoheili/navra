@@ -39,6 +39,7 @@ html, body {
   text-align: center;
   font-family: Avenir, Helvetica, Arial,HelveticaNeue,serif;
   position: relative;
+  overflow-x: hidden;
 }
 
 * {

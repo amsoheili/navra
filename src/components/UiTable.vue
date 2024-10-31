@@ -9,7 +9,9 @@
       <div class="table-row" v-for="(item,index) in props.itemsList">
         <div class="index">{{index + 1}}</div>
         <div class="single-data" v-for="(title,index) in Object.values(props.columnTitles)" :style="{flex: props.columnTitles[index].flex}">{{item[title.key]}}</div>
-        <div class="actions"></div>
+        <div class="actions">
+          <ui-action-select :options="actionOptions" @optionSelected="onRowAction($event,item.id)"></ui-action-select>
+        </div>
       </div>
     </div>
   </div>
@@ -18,7 +20,30 @@
 
 
 <script setup>
-  const props = defineProps(['columnTitles','itemsList']);
+  import UiActionSelect from '@/components/UiActionSelect.vue';
+  import { onMounted, ref } from 'vue';
+
+  const props = defineProps(['columnTitles','itemsList', 'actions']);
+  const emit = defineEmits(['rowAction']);
+
+  const actionOptions = ref([]);
+
+  onMounted(()=>
+      createActionOptions()
+  )
+
+  function createActionOptions() {
+    for (let i = 0; i < props.actions.length; i++) {
+      actionOptions.value.push({
+        label: props.actions[i],
+        value: props.actions[i],
+      })
+    }
+  }
+
+  function onRowAction($event, index) {
+    emit('rowAction', $event, index);
+  }
 
 </script>
 
@@ -26,7 +51,8 @@
   .ui-table {
     width: 100%;
     height: 100%;
-    overflow: auto;
+    overflow-y: visible;
+    min-width: 755px;
 
     .table-header {
       display: flex;
@@ -50,7 +76,7 @@
       }
 
       .action-placeholder {
-        width: 36px;
+        width: 66px;
       }
     }
 
@@ -94,11 +120,12 @@
         }
 
         .actions {
-          width: 36px;
+          width: 66px;
         }
       }
 
 
     }
   }
+
 </style>

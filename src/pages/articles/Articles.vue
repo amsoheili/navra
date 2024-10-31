@@ -9,10 +9,10 @@
         <div class="title">All Posts</div>
         <div class="table">
           <!--        <router-view />-->
-          <ui-table  :column-titles="columnTitles" :items-list="itemsList"></ui-table>
+          <ui-table  :column-titles="columnTitles" :items-list="itemsList" :actions="actions" @rowAction="onRowAction"></ui-table>
         </div>
       <div class="pagination">
-        <ui-pagination max-index="5"></ui-pagination>
+        <ui-pagination :max-index="5"></ui-pagination>
       </div>
       </div>
     </div>
@@ -67,7 +67,13 @@ const columnTitles = ref([
   }
 ]);
 
-const itemsList = ref(articlesList)
+const itemsList = ref(articlesList);
+
+const actions = ref(['EDIT', 'DELETE']);
+
+function onRowAction(action, index) {
+  // to do
+}
 </script>
 
 <style scoped>
@@ -98,6 +104,7 @@ const itemsList = ref(articlesList)
         align-items: flex-start;
         justify-content: flex-start;
         flex-direction: column;
+        overflow: hidden;
 
         .title {
           font-size: 40px;
@@ -121,6 +128,26 @@ const itemsList = ref(articlesList)
         display: flex;
         align-items: center;
         justify-content: center;
+      }
+    }
+  }
+
+  @media(max-width: 1024px) {
+    .articles .content .table{
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+  }
+
+  @media(max-width: 744px) {
+    .articles {
+      .content {
+        flex-direction: column;
+
+        .menu {
+          width: 100%;
+          height: auto;
+        }
       }
     }
   }
