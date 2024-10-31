@@ -1,3 +1,3 @@
 <template>
-  single article
+  hello
 </template>

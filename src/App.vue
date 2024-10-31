@@ -15,7 +15,19 @@ import UiNotice from '@/components/UiNotice.vue';
   --charcoal-grey: #373a3c;
   --water-blue: #1c7cd5;
   --white: #fff;
+  --black: #000;
   --pinkish-grey: #e7cecd;
+  --dark-sky-blue: #5bc0de;
+  --gunmetal: #55595c;
+}
+
+#app {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 html, body {
@@ -34,6 +46,11 @@ html, body {
   margin: 0;
   box-sizing: border-box;
   border: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
 .notice-component {

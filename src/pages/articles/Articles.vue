@@ -11,6 +11,9 @@
           <!--        <router-view />-->
           <ui-table  :column-titles="columnTitles" :items-list="itemsList"></ui-table>
         </div>
+      <div class="pagination">
+
+      </div>
       </div>
     </div>
   </div>
@@ -92,7 +95,7 @@ const itemsList = ref(articlesList)
         height: 100%;
         display: flex;
         align-items: flex-start;
-        justify-content: center;
+        justify-content: flex-start;
         flex-direction: column;
 
         .title {
@@ -107,9 +110,8 @@ const itemsList = ref(articlesList)
 
       .table {
         width: 100%;
-        height: 100%;
+        height: 580px;
         margin-top: 27px;
-
       }
     }
   }
