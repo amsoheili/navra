@@ -12,7 +12,7 @@
           <ui-table  :column-titles="columnTitles" :items-list="itemsList"></ui-table>
         </div>
       <div class="pagination">
-
+        <ui-pagination max-index="5"></ui-pagination>
       </div>
       </div>
     </div>
@@ -26,6 +26,7 @@ import UiMenu from '@/components/UiMenu.vue';
 import { ref } from 'vue';
 import UiTable from '@/components/UiTable.vue';
 import { articlesList } from '@/pages/articles/articles';
+import UiPagination from '@/components/UiPagination.vue';
 
 const menuItems = ref([
   {
@@ -112,6 +113,14 @@ const itemsList = ref(articlesList)
         width: 100%;
         height: 580px;
         margin-top: 27px;
+      }
+
+      .pagination {
+        margin-top: 32px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
     }
   }
