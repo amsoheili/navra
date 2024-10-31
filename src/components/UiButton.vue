@@ -1,11 +1,11 @@
 <template>
   <div class="ui-button">
-    <button>{{props.buttonText}}</button>
+    <button :class="buttonType">{{props.buttonText}}</button>
   </div>
 </template>
 
 <script setup>
-const props = defineProps(['buttonText']);
+const props = defineProps(['buttonText', 'buttonType']);
 
 </script>
 
@@ -23,9 +23,22 @@ const props = defineProps(['buttonText']);
       font-size: 16px;
       font-weight: normal;
       font-style: normal;
-      line-height: 1.5;
-      letter-spacing: normal;
       cursor: pointer;
+
+      &.b-black {
+        border-radius: 4px;
+        border: solid 1px var(--dark-sky-blue);
+        color: var(--dark-sky-blue);
+        background-color: var(--charcoal-grey);
+      }
+
+      &.b-red {
+
+      }
+
+      &.b-white {
+
+      }
     }
   }
 </style>
