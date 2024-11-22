@@ -44,7 +44,7 @@ const validity = ref({
   password: true,
 });
 const router = useRouter();
-const apiService = UserService();
+const userService = UserService();
 
 function confirm(){
 
@@ -56,14 +56,14 @@ function confirm(){
   }
 
   if(isRegister.value){
-    apiService.registerUser(user.value, email.value, password.value)
+    userService.registerUser(user.value, email.value, password.value)
         .then(response => {
           if(response.status === API_STATUS.CREATED){
             isRegister.value = false;
           }
         });
   }else {
-    apiService.loginUser(email.value, password.value)
+    userService.loginUser(email.value, password.value)
         .then(response => {
           if(response.status === API_STATUS.OK){
             router.push('/articles');

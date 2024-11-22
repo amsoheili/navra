@@ -67,7 +67,7 @@ const articlesList = ref([]);
 const convertedArticlesList = ref([]);
 const actions = ref(['EDIT', 'DELETE']);
 
-const apiService = UserService();
+const userService = UserService();
 
 onMounted(()=>{
   loadUserData();
@@ -75,14 +75,14 @@ onMounted(()=>{
 })
 
 function loadUserData() {
-  apiService.currentUser()
+  userService.currentUser()
       .then(response => {
         username.value = response.data.user.username;
       });
 }
 
 function loadArticles() {
-  apiService.getAllArticles().then(response => {
+  userService.getAllArticles().then(response => {
     articlesList.value = response.data.articles;
     convertedArticlesList.value = convertArticlesList(response.data.articles);
   })
