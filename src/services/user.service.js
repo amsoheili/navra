@@ -1,6 +1,5 @@
 import navraAxios from '@/services/navra-axios';
 import { API_ROUTES } from '@/api/api-routes';
-import { useRouter } from 'vue-router';
 import router from '@/router';
 
 export const UserService = () => {
