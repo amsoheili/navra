@@ -1,6 +1,6 @@
 <template>
   <div class="articles">
-    <ui-header></ui-header>
+    <ui-header :username="username"></ui-header>
     <div class="content">
       <div class="menu">
         <ui-menu title="Post" :items="menuItems"></ui-menu>
@@ -23,10 +23,11 @@
 
 import UiHeader from '@/components/UiHeader.vue';
 import UiMenu from '@/components/UiMenu.vue';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import UiTable from '@/components/UiTable.vue';
 import { articlesList } from '@/pages/articles/articles';
 import UiPagination from '@/components/UiPagination.vue';
+import { navraApiService } from '@/services/navra-api.service';
 
 const menuItems = ref([
   {
@@ -66,10 +67,22 @@ const columnTitles = ref([
     flex: 1
   }
 ]);
-
+const username = ref(null);
 const itemsList = ref(articlesList);
-
 const actions = ref(['EDIT', 'DELETE']);
+
+const apiService = navraApiService();
+
+onMounted(()=>{
+  loadUserData();
+})
+
+function loadUserData() {
+  apiService.currentUser()
+      .then(response => {
+        username.value = response.data.user.username;
+      });
+}
 
 function onRowAction(action, index) {
   // to do

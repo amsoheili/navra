@@ -1,4 +1,4 @@
-import navraAxios from '@/api/navra-axios';
+import navraAxios from '@/services/navra-axios';
 import { API_ROUTES } from '@/api/api-routes';
 
 export const navraApiService = () => {

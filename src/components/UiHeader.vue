@@ -2,7 +2,7 @@
   <div class="ui-header">
     <div class="titles">
       <div class="main-title">Arvan Challenge</div>
-      <div class="greeting-title">Welcome Amir Mohammad!!!</div>
+      <div class="greeting-title">Welcome {{props.username}}</div>
     </div>
     <div class="cta">
       <ui-button button-type="b-black" button-text="Logout"></ui-button>
@@ -12,6 +12,7 @@
 
 <script setup>
 import UiButton from '@/components/UiButton.vue';
+const props = defineProps(['username']);
 </script>
 
 <style>
