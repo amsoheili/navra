@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Articles from '@/pages/articles/Articles.vue';
 import Enter from '@/pages/enter/Enter.vue';
-import ArticlesPage from '@/pages/articles-page/ArticlesPage.vue';
+import SingleArticle from '@/pages/single-article/SingleArticle.vue';
 
 const routes = [
   {
@@ -11,11 +11,18 @@ const routes = [
   {
     path: '/articles',
     name: 'articles',
-    component: Articles,
     children: [
       {
+        path: '',
+        component: Articles,
+      },
+      {
         path: 'page/:page',
-        component: ArticlesPage,
+        component: Articles,
+      },
+      {
+        path: 'edit/:slug',
+        component: SingleArticle
       }
     ]
   },

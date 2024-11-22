@@ -1,6 +1,7 @@
 import navraAxios from '@/services/navra-axios';
 import { API_ROUTES } from '@/api/api-routes';
 import { useRouter } from 'vue-router';
+import router from '@/router';
 
 export const UserService = () => {
 
@@ -30,7 +31,7 @@ export const UserService = () => {
     },
     logoutUser() {
       localStorage.removeItem('authToken');
-      useRouter().push('/enter');
+      router.push('/enter');
     }
   }
 

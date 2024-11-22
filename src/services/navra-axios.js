@@ -1,5 +1,8 @@
 import axios from 'axios';
 import { API_STATUS } from '@/api/api-status';
+import { API_ROUTES } from '@/api/api-routes';
+import { useRouter } from 'vue-router';
+import router from '@/router';
 
 const navraAxios = axios.create({
   baseURL: 'http://5.34.201.164:3000/api/',
@@ -30,7 +33,10 @@ navraAxios.interceptors.response.use(
     return response;
   },
   (error) => {
-    return Promise.reject(error);
+    if(error.status === API_STATUS.UNAUTHORIZED){
+      router.push('/enter');
+    }
+    return new Promise(()=>{});
   }
 );
 

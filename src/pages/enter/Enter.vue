@@ -29,6 +29,7 @@ import { noticeService } from '@/reactives/notice.reactive';
 import { UserService } from '@/services/user.service';
 import { API_STATUS } from '@/api/api-status';
 
+
 const isRegister = ref(false);
 const user = ref('');
 const email = ref('');
@@ -67,6 +68,10 @@ function confirm(){
         .then(response => {
           if(response.status === API_STATUS.OK){
             router.push('/articles');
+          }
+        },error => {
+          if (error.status === API_STATUS.FORBIDDEN){
+            noticeService.pushNotification('Email or Password is invalid', 'error');
           }
         })
   }

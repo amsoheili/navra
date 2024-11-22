@@ -26,14 +26,15 @@
   import UiActionSelect from '@/components/UiActionSelect.vue';
   import { onMounted, ref } from 'vue';
   import UiPagination from '@/components/UiPagination.vue';
-
-  const props = defineProps(['columnTitles','itemsList', 'actions', 'perPage']);
+  import { useRouter } from 'vue-router';
+  const props = defineProps(['columnTitles','itemsList', 'actions', 'perPage', 'currentPage']);
   const emit = defineEmits(['rowAction']);
 
   const actionOptions = ref([]);
   const currentPage = ref(0);
   const maxPage = ref();
   const paginatedList = ref([]);
+  const router = useRouter();
 
   onMounted(() => {
       createActionOptions();
@@ -42,6 +43,7 @@
   )
 
   function initializePaginatedList() {
+    currentPage.value = props.currentPage - 1;
     maxPage.value = Math.ceil(props.itemsList.length / props.perPage);
     paginateList(props.itemsList);
   }
@@ -67,7 +69,7 @@
     }
 
     currentPage.value++;
-    paginateList();
+    router.push(`/articles/page/${currentPage.value+1}`);
   }
 
   function prevPage() {
@@ -76,7 +78,7 @@
     }
 
     currentPage.value--;
-    paginateList();
+    router.push(`/articles/page/${currentPage.value+1}`);
   }
 
   function certainPage(index) {
@@ -85,7 +87,7 @@
     }
 
     currentPage.value = index;
-    paginateList();
+    router.push(`/articles/page/${currentPage.value+1}`);
   }
 
   function onRowAction($event, index) {
