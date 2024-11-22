@@ -7,13 +7,10 @@
       </div>
       <div class="articles-list">
         <div class="title">All Posts</div>
-        <div class="table">
+        <div class="table" v-if="convertedArticlesList && convertedArticlesList.length > 0">
           <!--        <router-view />-->
-          <ui-table  :column-titles="columnTitles" :items-list="itemsList" :actions="actions" @rowAction="onRowAction"></ui-table>
+          <ui-table :column-titles="columnTitles" :items-list="convertedArticlesList" :actions="actions" :per-page="9" @rowAction="onRowAction"></ui-table>
         </div>
-      <div class="pagination">
-        <ui-pagination :max-index="5"></ui-pagination>
-      </div>
       </div>
     </div>
   </div>
@@ -25,8 +22,6 @@ import UiHeader from '@/components/UiHeader.vue';
 import UiMenu from '@/components/UiMenu.vue';
 import { onMounted, ref } from 'vue';
 import UiTable from '@/components/UiTable.vue';
-import { articlesList } from '@/pages/articles/articles';
-import UiPagination from '@/components/UiPagination.vue';
 import { navraApiService } from '@/services/navra-api.service';
 
 const menuItems = ref([
@@ -68,13 +63,15 @@ const columnTitles = ref([
   }
 ]);
 const username = ref(null);
-const itemsList = ref(articlesList);
+const articlesList = ref([]);
+const convertedArticlesList = ref([]);
 const actions = ref(['EDIT', 'DELETE']);
 
 const apiService = navraApiService();
 
 onMounted(()=>{
   loadUserData();
+  loadArticles();
 })
 
 function loadUserData() {
@@ -82,6 +79,27 @@ function loadUserData() {
       .then(response => {
         username.value = response.data.user.username;
       });
+}
+
+function loadArticles() {
+  apiService.getAllArticles().then(response => {
+    articlesList.value = response.data.articles;
+    convertedArticlesList.value = convertArticlesList(response.data.articles);
+  })
+}
+
+function convertArticlesList(articles) {
+  const convertedList = [];
+  for (const article of articles) {
+    convertedList.push({
+      title: article.title,
+      author: article.author.username,
+      tag: article.tagList[0],
+      excerpt: article.description,
+      created: article.updatedAt,
+    })
+  }
+  return convertedList;
 }
 
 function onRowAction(action, index) {
@@ -117,7 +135,7 @@ function onRowAction(action, index) {
         align-items: flex-start;
         justify-content: flex-start;
         flex-direction: column;
-        overflow: hidden;
+        overflow-y: scroll;
 
         .title {
           font-size: 40px;
@@ -133,14 +151,6 @@ function onRowAction(action, index) {
         width: 100%;
         height: 580px;
         margin-top: 27px;
-      }
-
-      .pagination {
-        margin-top: 32px;
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
       }
     }
   }

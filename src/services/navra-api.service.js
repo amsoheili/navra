@@ -24,6 +24,9 @@ export const navraApiService = () => {
     },
     currentUser() {
       return navraAxios.get(API_ROUTES.CURRENT_USER);
+    },
+    getAllArticles() {
+      return navraAxios.get(API_ROUTES.ALL_ARTICLES);
     }
   }
 

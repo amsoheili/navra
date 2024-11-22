@@ -6,13 +6,16 @@
       <div class="action-placeholder"></div>
     </div>
     <div class="table-rows">
-      <div class="table-row" v-for="(item,index) in props.itemsList">
+      <div class="table-row" v-if="paginatedList.length > 0" v-for="(item,index) in paginatedList">
         <div class="index">{{index + 1}}</div>
         <div class="single-data" v-for="(title,index) in Object.values(props.columnTitles)" :style="{flex: props.columnTitles[index].flex}">{{item[title.key]}}</div>
         <div class="actions">
           <ui-action-select :options="actionOptions" @optionSelected="onRowAction($event,item.id)"></ui-action-select>
         </div>
       </div>
+    </div>
+    <div class="pagination">
+      <ui-pagination :max-index="5"></ui-pagination>
     </div>
   </div>
 </template>
@@ -22,15 +25,30 @@
 <script setup>
   import UiActionSelect from '@/components/UiActionSelect.vue';
   import { onMounted, ref } from 'vue';
+  import UiPagination from '@/components/UiPagination.vue';
 
-  const props = defineProps(['columnTitles','itemsList', 'actions']);
+  const props = defineProps(['columnTitles','itemsList', 'actions', 'perPage']);
   const emit = defineEmits(['rowAction']);
 
   const actionOptions = ref([]);
+  const currentPage = ref(0);
+  const paginatedList = ref([]);
 
-  onMounted(()=>
-      createActionOptions()
+  onMounted(() => {
+      createActionOptions();
+      initializePaginatedList();
+    }
   )
+
+  function initializePaginatedList() {
+    paginateList(props.itemsList);
+  }
+
+  function paginateList(rawList) {
+    const startIndex = currentPage.value*props.perPage;
+    const endIndex = currentPage.value*props.perPage + props.perPage - 1;
+    paginatedList.value = rawList.slice(startIndex, endIndex);
+  }
 
   function createActionOptions() {
     for (let i = 0; i < props.actions.length; i++) {
@@ -91,6 +109,7 @@
         height: 66px;
         padding: 19px 0 23px 0;
         display: flex;
+        gap: 4px;
         flex-direction: row;
         align-items: center;
         justify-content: center;
@@ -104,6 +123,9 @@
           letter-spacing: normal;
           text-align: left;
           color: var(--charcoal-grey);
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
         }
 
         .index {
@@ -125,6 +147,14 @@
       }
 
 
+    }
+
+    .pagination {
+      margin-top: 32px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   }
 
