@@ -14,7 +14,7 @@
         {{!isRegister ? 'Don’t have account?' : 'Already Registered?'}}
       </div>
       <div class="action" @click="toggleMode">
-        {{!isRegister ? 'Login' : 'Register Now'}}
+        {{!isRegister ? 'Register Now' : 'Login'}}
       </div>
     </div>
   </div>
@@ -26,6 +26,8 @@ import UiInput from '@/components/UiInput.vue';
 import UiButton from '@/components/UiButton.vue';
 import { useRouter } from 'vue-router';
 import { noticeService } from '@/reactives/notice.reactive';
+import { navraApiService } from '@/services/navra-api.service';
+import { API_STATUS } from '@/api/api-status';
 
 const isRegister = ref(false);
 const user = ref('');
@@ -42,6 +44,7 @@ const validity = ref({
   password: true,
 });
 const router = useRouter();
+const apiService = navraApiService();
 
 function confirm(){
 
@@ -52,7 +55,21 @@ function confirm(){
     return;
   }
 
-  router.push({name: 'articles'});
+  if(isRegister.value){
+    apiService.registerUser(user.value, email.value, password.value)
+        .then(response => {
+          if(response.status === API_STATUS.CREATED){
+            isRegister.value = false;
+          }
+        });
+  }else {
+    apiService.loginUser(email.value, password.value)
+        .then(response => {
+          if(response.status === API_STATUS.OK){
+            router.push('/articles');
+          }
+        })
+  }
 }
 
 function isFormValid() {
@@ -130,6 +147,15 @@ function cleanErrorMessages() {
     password: '',
   };
 }
+
+// soheili
+// ams@email.com
+// 123456789
+
+
+// amir
+// amir@email.com
+// 123456789
 
 </script>
 
