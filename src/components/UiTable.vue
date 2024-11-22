@@ -7,7 +7,7 @@
     </div>
     <div class="table-rows">
       <div class="table-row" v-if="paginatedList.length > 0" v-for="(item,index) in paginatedList">
-        <div class="index">{{index + 1}}</div>
+        <div class="index">{{(currentPage * (props.perPage-1)) + index + 1}}</div>
         <div class="single-data" v-for="(title,index) in Object.values(props.columnTitles)" :style="{flex: props.columnTitles[index].flex}">{{item[title.key]}}</div>
         <div class="actions">
           <ui-action-select :options="actionOptions" @optionSelected="onRowAction($event,item.id)"></ui-action-select>
@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class="pagination">
-      <ui-pagination :max-index="5"></ui-pagination>
+      <ui-pagination v-if="maxPage" :max-index="maxPage" @onNextPage="nextPage" @onPrevPage="prevPage" @onCertainPage="certainPage"></ui-pagination>
     </div>
   </div>
 </template>
@@ -32,6 +32,7 @@
 
   const actionOptions = ref([]);
   const currentPage = ref(0);
+  const maxPage = ref();
   const paginatedList = ref([]);
 
   onMounted(() => {
@@ -41,13 +42,14 @@
   )
 
   function initializePaginatedList() {
+    maxPage.value = Math.ceil(props.itemsList.length / props.perPage);
     paginateList(props.itemsList);
   }
 
-  function paginateList(rawList) {
+  function paginateList() {
     const startIndex = currentPage.value*props.perPage;
     const endIndex = currentPage.value*props.perPage + props.perPage - 1;
-    paginatedList.value = rawList.slice(startIndex, endIndex);
+    paginatedList.value = props.itemsList.slice(startIndex, endIndex);
   }
 
   function createActionOptions() {
@@ -57,6 +59,33 @@
         value: props.actions[i],
       })
     }
+  }
+
+  function nextPage() {
+    if (currentPage.value >= maxPage.value) {
+      return;
+    }
+
+    currentPage.value++;
+    paginateList();
+  }
+
+  function prevPage() {
+    if (currentPage.value <= 0) {
+      return;
+    }
+
+    currentPage.value--;
+    paginateList();
+  }
+
+  function certainPage(index) {
+    if (index > maxPage.value){
+      return;
+    }
+
+    currentPage.value = index;
+    paginateList();
   }
 
   function onRowAction($event, index) {
@@ -102,7 +131,8 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
+      min-height: 530px;
 
       .table-row {
         width: 100%;

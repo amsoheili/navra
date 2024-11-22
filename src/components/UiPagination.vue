@@ -1,10 +1,10 @@
 <template>
   <div class="ui-pagination">
-    <div class="prev index"><</div>
+    <div class="prev index" @click="emit('onPrevPage')"><</div>
     <div v-if="indicesList.length > 0" class="indices">
-      <div v-for="index of indicesList" class="index">{{index}}</div>
+      <div v-for="index of indicesList" class="index" @click="emit('onCertainPage',index-1)">{{index}}</div>
     </div>
-    <div class="next index">></div>
+    <div class="next index" @click="emit('onNextPage')">></div>
   </div>
 </template>
 
@@ -12,6 +12,7 @@
 import { onMounted, ref } from 'vue';
 
   const props = defineProps(['maxIndex','currentIndex'])
+  const emit = defineEmits(['onNextPage','onPrevPage','onCertainPage']);
 
   const indicesList = ref([]);
 
@@ -46,6 +47,7 @@ import { onMounted, ref } from 'vue';
       letter-spacing: normal;
       color: var(--charcoal-grey);
       border: solid 1px #ddd;
+      cursor: pointer;
     }
 
     .indices {
