@@ -26,7 +26,7 @@ import UiInput from '@/components/UiInput.vue';
 import UiButton from '@/components/UiButton.vue';
 import { useRouter } from 'vue-router';
 import { noticeService } from '@/reactives/notice.reactive';
-import { navraApiService } from '@/services/navra-api.service';
+import { UserService } from '@/services/user.service';
 import { API_STATUS } from '@/api/api-status';
 
 const isRegister = ref(false);
@@ -44,7 +44,7 @@ const validity = ref({
   password: true,
 });
 const router = useRouter();
-const apiService = navraApiService();
+const apiService = UserService();
 
 function confirm(){
 

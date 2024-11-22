@@ -22,7 +22,7 @@ import UiHeader from '@/components/UiHeader.vue';
 import UiMenu from '@/components/UiMenu.vue';
 import { onMounted, ref } from 'vue';
 import UiTable from '@/components/UiTable.vue';
-import { navraApiService } from '@/services/navra-api.service';
+import { UserService } from '@/services/user.service';
 
 const menuItems = ref([
   {
@@ -67,7 +67,7 @@ const articlesList = ref([]);
 const convertedArticlesList = ref([]);
 const actions = ref(['EDIT', 'DELETE']);
 
-const apiService = navraApiService();
+const apiService = UserService();
 
 onMounted(()=>{
   loadUserData();

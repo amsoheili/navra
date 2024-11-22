@@ -5,14 +5,20 @@
       <div class="greeting-title">Welcome {{props.username}}</div>
     </div>
     <div class="cta">
-      <ui-button button-type="b-black" button-text="Logout"></ui-button>
+      <ui-button button-type="b-black" button-text="Logout" @click="logout"></ui-button>
     </div>
   </div>
 </template>
 
 <script setup>
 import UiButton from '@/components/UiButton.vue';
+import { UserService } from '@/services/user.service';
 const props = defineProps(['username']);
+const userService = UserService();
+
+function logout() {
+  userService.logoutUser();
+}
 </script>
 
 <style>

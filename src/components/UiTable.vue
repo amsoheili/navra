@@ -62,7 +62,7 @@
   }
 
   function nextPage() {
-    if (currentPage.value >= maxPage.value) {
+    if (currentPage.value >= maxPage.value-1) {
       return;
     }
 

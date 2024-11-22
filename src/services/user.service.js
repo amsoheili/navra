@@ -1,8 +1,8 @@
 import navraAxios from '@/services/navra-axios';
 import { API_ROUTES } from '@/api/api-routes';
+import { useRouter } from 'vue-router';
 
-export const navraApiService = () => {
-
+export const UserService = () => {
 
   return {
     registerUser(username, email, password){
@@ -27,6 +27,10 @@ export const navraApiService = () => {
     },
     getAllArticles() {
       return navraAxios.get(API_ROUTES.ALL_ARTICLES);
+    },
+    logoutUser() {
+      localStorage.removeItem('authToken');
+      useRouter().push('/enter');
     }
   }
 
